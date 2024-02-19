@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>{{ data.to_dict().name }}</title>
+    <style>
+        .parallax-section {
+            background-image: url('https://wallpapers.com/images/featured/dark-forest-shsyax3tzax42p9o.jpg');
+            background-size: cover;
+            background-repeat: repeat;
+        }
+    </style>
+</head>
+
+<body class="bg-black">
+
+    <nav class="bg-black p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-white font-semibold text-xl">{{ data.to_dict().name }}</div>
+
+            <!-- Responsive Navigation Menu -->
+            <div class="md:hidden">
+                <button id="burger-menu" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex space-x-4">
+                <a href="#" class="text-white">Home</a>
+                <a href="#" class="text-white">About</a>
+                <a href="#" class="text-white">Services</a>
+                <a href="#" class="text-white">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Responsive Navigation Menu (hidden by default) -->
+    <div id="menu" class="md:hidden bg-white p-2 text-black hidden">
+        <a href="#" class="block py-2">Home</a>
+        <a href="#" class="block py-2">About</a>
+        <a href="#" class="block py-2">Services</a>
+        <a href="#" class="block py-2">Contact</a>
+    </div>
+
+
+    <section class="h-screen bg-cover bg-center flex items-center relative parallax-section">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="container mx-auto text-center text-white relative z-10">
+            <h2 class="text-4xl font-bold">{{ homepage.to_dict().title }}</h2>
+            <p class="mt-4">{{ homepage.to_dict().title1 }}</p>
+            <p class="mt-2">{{ homepage.to_dict().subtitle }}</p>
+            <h2 class="text-2xl font-bold mt-8">{{ homepage.to_dict().greet }}</h2>
+        </div>
+    </section>
+
+
+
+    <section id="about" class="min-h-screen flex items-center bg-black text-white">
+        <div class="container mx-auto p-4 md:p-12">
+            <h2 class="text-3xl font-bold mb-4 md:mb-8">About Me</h2>
+            <div class="mb-6">
+                <p class="text-base md:text-lg mb-4">
+                    {{ data.to_dict().summary }}
+                </p>
+                <h3 class="text-lg md:text-xl font-bold mb-2">Bachelor</h3>
+                <p class="text-base md:text-lg">
+                    {{ data.to_dict().Bachelor.course }} @ {{ data.to_dict().Bachelor.University }}, Percentage: {{
+                    data.to_dict().Bachelor.percentage_cgpa }}
+                    <br> Started: {{ data.to_dict().Bachelor.started }} | Completed: {{
+                    data.to_dict().Bachelor.completed }}
+                </p>
+                <h3 class="text-lg md:text-xl font-bold mt-4 mb-2">Master</h3>
+                <p class="text-base md:text-lg">
+                    {{ data.to_dict().master.course }} @ {{ data.to_dict().master.University }}, {{
+                    data.to_dict().master.percentage_cgpa }}
+                    <br> Started: {{ data.to_dict().master.started }}| Completed:{{ data.to_dict().master.completed }}
+                </p>
+            </div>
+            <div class="mb-4">
+                <h3 class="text-lg md:text-xl font-bold mb-2">Location:</h3>
+                <p class="text-base md:text-lg">
+                    Native: {{ data.to_dict().Location.native }}
+                    <br> Current: {{ data.to_dict().Location.current }}
+                </p>
+            </div>
+            <div>
+                <p class="text-base md:text-lg font-bold mt-4">
+                    In addition to my technical skills, I have a keen interest in:
+                </p>
+                <ul class="list-disc ml-4 md:text-base">
+                    {% for item in data.to_dict().intrest %}
+                    <li>
+                        <span class="block text-sm font-bold mt-2">{{ item }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <h2 class="text-base md:text-xl font-bold mb-4 mt-8"><a href="#skills">{{ data.to_dict().highlight }}</a>
+            </h2>
+        </div>
+    </section>
+
+
+
+    <!-- Skills Section -->
+    <h2 class="text-3xl text-white font-bold ml-16">technical skills</h2>
+    <section id="projects" class="container ">
+        <div class="container mx-auto flex justify-evenly flex-wrap align-middle">
+
+            {% for item in skills %}
+            <div class="project  w-60 m-4 border border-white rounded-md bg-black text-white   justify-center">
+                <span class="text-lg font-semibold text-center m-3">{{ item.id }}</span> <br>
+                <ul class="m-4">
+
+                    {% for lang in item.to_dict().name %}
+                    <li>{{ lang.name }}</li>
+
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+
+        </div>
+    </section>
+
+
+    <!-- Projects Section -->
+    <h2 class="text-3xl text-white font-bold ml-16">Projects</h2>
+    <section id="projects" class="container ">
+        <div class="container mx-auto flex justify-evenly flex-wrap align-middle">
+            {% for item in projects %}
+            <div class="project  w-60 m-4 border border-white rounded-md bg-black text-white justify-center bg-cover bg-no-repeat bg-center"
+                style="background-image:url('{{ item.to_dict().thumbnail }}');">
+                <span class="text-lg font-semibold text-black text-center m-3">{{ item.to_dict().title }}</span> <br>
+                <span class="text-sm font-semibold text-black text-center m-3">{{ item.to_dict().subtitle }}</span> <br>
+                <ul class="m-4 text-black">
+
+                    {% for fea in item.to_dict().features %}
+                    <li>{{ fea }}</li>
+                    {% endfor %}
+
+                    <li>javascript Programming</li>
+                    <li>C++ Programming</li>
+                    <li>Dart Programming</li>
+                </ul>
+                <a href="#"><span class="text-sm font-semibold text-black text-center m-3">{{ item.to_dict().link
+                        }}</span> </a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+
+
+    <!-- Projects Section -->
+    <h2 class="text-3xl text-white font-bold text-center md:text-left ml-4 md:ml-16 mb-4 md:mb-0">Achievements</h2>
+
+    <section id="projects" class="container mx-auto">
+        <div class="flex flex-wrap justify-evenly">
+
+            {% for item in achievements %}
+            <div
+                class="project w-full md:w-2/3 lg:w-1/2 xl:w-1/3 m-4 border-white rounded-md bg-black text-white text-center">
+                <span class="text-lg font-semibold m-3">{{ item.to_dict().title }}</span>
+                <br>
+                <span class="text-lg m-3">{{ item.to_dict().prize }}</span>
+                <br>
+                <span class="text-sm m-3">{{ item.to_dict().role }}</span>
+                <br>
+                <span class="text-sm font-light m-3">{{ item.to_dict().num_of_team }}</span>
+            </div>
+            {% endfor %}
+
+        </div>
+    </section>
+
+
+    <h2 class="text-3xl text-white font-bold text-center md:text-left ml-4 md:ml-16 mb-4 md:mb-0">Contacts</h2>
+
+    <section id="projects" class="container mx-auto">
+        <div class="flex flex-wrap justify-evenly">
+
+            {% for item in social %}
+            <div
+                class="project w-full md:w-1/2 lg:w-1/3 xl:w-1/4 m-4 border-white rounded-md bg-black text-white text-center flex items-center">
+                <img src="{{ item.to_dict().image }}" alt="Instagram Logo"
+                    class="w-8 h-8 mr-2 bg-contain object-contain">
+                <a href="{{ item.to_dict().link }}"><span class="text-lg m-3">{{ item.to_dict().name }}</span></a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class=" md:w-auto m-4 border-white rounded-md bg-black text-black p-4 md:justify-center">
+        <form action="{{ url_for('get_form') }}" method="post" class="flex flex-col items-center md:items-start">
+            <input class="w-full md:w-3/4 2xl:h-9 mb-2 px-2 py-1" type="email" name="email" id="email"
+                placeholder="Email">
+            <input class="w-full md:w-3/4 mb-2 px-2 py-1" type="text" name="title" id="title" placeholder="Title">
+            <textarea class="w-full md:w-3/4 mb-2 px-2 py-1" name="des" id="des" cols="5" rows="5"
+                placeholder="Description"></textarea>
+            <button type="submit" class="bg-white text-black px-4 py-2 rounded-md">Submit</button>
+        </form>
+    </div>
+
+    <script>
+
+        document.getElementById('burger-menu').addEventListener('click', function () {
+            document.getElementById('menu').classList.toggle('hidden');
+        });
+    </script>
+
+</body>
+
+</html>
